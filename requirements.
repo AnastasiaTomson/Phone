@@ -1,0 +1,9 @@
+altgraph==0.17
+ez-setup==0.9
+mysqlclient==1.4.6
+PyInstaller==4.0.dev0+a1f92c6a08
+PyQt5==5.14.1
+PyQt5-sip==12.7.1
+SQLAlchemy==1.3.13
+telnetlib2==1.1.0
+th==0.0.1
