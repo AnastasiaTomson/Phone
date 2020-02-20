@@ -1,0 +1,6 @@
+Для pyinstaller:
+pip install https://github.com/pyinstaller/pyinstaller/tarball/develop
+
+Для PyQt5:
+easy_install --upgrade pip
+pip install PyQt5
