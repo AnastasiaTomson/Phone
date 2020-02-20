@@ -1,0 +1,4 @@
+altgraph==0.17
+mysql-connector==2.2.9
+PyQt5==5.14.1
+PyQt5-sip==12.7.1
