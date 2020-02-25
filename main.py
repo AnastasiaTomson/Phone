@@ -216,6 +216,7 @@ def telnet_connect():
 
 # Основная функция, которая принимает ответ от сервера
 def listen_telnet(OPERATOR_NUM):
+    first_phone = ''
     while not shutdown_flag.is_set():
         out = telnet.read_until(NEW_LINE * 2).decode("utf-8")
         print(out)
@@ -229,7 +230,7 @@ def listen_telnet(OPERATOR_NUM):
                 elif re.search(r'Channel2:', line):
                     operator_num = line.split(':')[1].strip().replace("'", '')
             print('Входящий {} - Оператор {}'.format(phone, operator_num))
-            if len(phone) > 4 and OPERATOR_NUM in operator_num:
+            if len(phone) > 4 and OPERATOR_NUM in operator_num and first_phone != phone:
                 mycursor.execute("SQL request".format(phone))
                 search_customers = mycursor.fetchall()
                 if len(search_customers) == 0:
@@ -239,6 +240,7 @@ def listen_telnet(OPERATOR_NUM):
                 else:
                     webbrowser.open(
                         'http://test.com/{}'.format(search_customers[0]['phone']))
+                first_phone = phone
 
 
 app = QtWidgets.QApplication([])
