@@ -93,18 +93,18 @@ file = open("log.txt", 'a', encoding="utf-8")
 
 # Подключение к базе данных
 mydb = mysql.connector.connect(
-    host="192.168.88.48",
-    user="phones",
-    passwd="tyjvaL8N",
-    database="billing"
+    host="127.0.0.1",
+    user="username",
+    passwd="password",
+    database="database"
 )
 mycursor = mydb.cursor(dictionary=True)
 
 # Подключение и аутертификация на сервере
-telnet = telnetlib.Telnet(host='192.168.88.200', port=5038)
+telnet = telnetlib.Telnet(host='127.0.0.1', port=8000)
 telnet.read_until(NEW_LINE)
 auth_commands = ('Action: Login\n'.encode('ascii'),
-                 'Username: {}\n'.format('admin').encode('ascii'),
+                 'Username: {}\n'.format('username').encode('ascii'),
                  'Secret: {}\n'.format("123456").encode('ascii'),
                  NEW_LINE)
 for i in auth_commands:
@@ -133,7 +133,6 @@ class Window(QMainWindow):
                 Обращаемся к методу is_error, который изменит интерфейс.
         иначе выводим сообщение в radioButton
     '''
-
     def start(self):
         if self.ui.numOperate.text() != "":
             if telnet_connect():
@@ -231,15 +230,15 @@ def listen_telnet(OPERATOR_NUM):
                     operator_num = line.split(':')[1].strip().replace("'", '')
             print('Входящий {} - Оператор {}'.format(phone, operator_num))
             if len(phone) > 4 and OPERATOR_NUM in operator_num:
-                mycursor.execute("SELECT * FROM `customer` WHERE phone LIKE {}".format(phone))
+                mycursor.execute("SQL request".format(phone))
                 search_customers = mycursor.fetchall()
                 if len(search_customers) == 0:
-                    webbrowser.open('http://billing.apex-crimea.com/customers')
+                    webbrowser.open('http://test.com/')
                 elif len(search_customers) == 1:
-                    webbrowser.open('http://billing.apex-crimea.com/customers/%s' % search_customers[0]['login'])
+                    webbrowser.open('http://test.com/{}'.format(search_customers[0]['login']))
                 else:
                     webbrowser.open(
-                        'http://billing.apex-crimea.com/customers/search_phone/%s' % search_customers[0]['phone'])
+                        'http://test.com/{}'.format(search_customers[0]['phone']))
 
 
 app = QtWidgets.QApplication([])
